@@ -19,3 +19,5 @@ doc/sv/fakeroot.1
 install-sh
 ltmain.sh
 missing
+jniLibs/
+build/

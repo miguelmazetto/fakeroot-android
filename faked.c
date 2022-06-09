@@ -1507,7 +1507,7 @@ int main(int argc, char **argv){
     /* literally copied from the linux klogd code, go to background */
     if ((pid=fork()) == 0){
       int fl;
-      int num_fds = getdtablesize();
+      int num_fds = sysconf(_SC_OPEN_MAX);
 
       fflush(stdout);
 

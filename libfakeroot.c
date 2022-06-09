@@ -86,12 +86,14 @@
 #define SEND_STAT64(a,b,c) send_stat64(a,b,c)
 #define SEND_GET_STAT(a,b) send_get_stat(a,b)
 #define SEND_GET_STAT64(a,b) send_get_stat64(a,b)
+#define SEND_GET_XATTR(a,b,c) send_get_xattr(a,b,c)
 #define SEND_GET_XATTR64(a,b,c) send_get_xattr64(a,b,c)
 #else
 #define SEND_STAT(a,b,c) send_stat(a,b)
 #define SEND_STAT64(a,b,c) send_stat64(a,b)
 #define SEND_GET_STAT(a,b) send_get_stat(a)
 #define SEND_GET_STAT64(a,b) send_get_stat64(a)
+#define SEND_GET_XATTR(a,b,c) send_get_xattr(a,b)
 #define SEND_GET_XATTR64(a,b,c) send_get_xattr64(a,b)
 #endif
 
@@ -139,6 +141,8 @@
 #define INT_SEND_STAT(a,b) SEND_STAT(a,b,_STAT_VER)
 #define INT_SEND_GET_XATTR(a,b) SEND_GET_XATTR(a,b,_STAT_VER)
 #define INT_SEND_GET_STAT(a,b) SEND_GET_STAT(a,b)
+
+#define _ID_T // mmz: Android
 
 /* 10.10 uses id_t in getpriority/setpriority calls, so pretend
    id_t is used everywhere, just happens to be int on some OSes */

@@ -1,17 +1,13 @@
 #!/bin/bash
 
 SDIR="$( cd -- "$( dirname -- "${BASH_SOURCE[0]:-$0}"; )" &> /dev/null && pwd 2> /dev/null; )";
+RDIR=$SDIR
+if [[ ! -z "$MMZ_ROOTFOLDER" ]]; then RDIR=$MMZ_ROOTFOLDER; fi
+cd $SDIR
 
 export TOOLCHAIN=$ANDROID_NDK/toolchains/llvm/prebuilt/linux-x86_64
 export ANDROID_USR=$TOOLCHAIN/sysroot/usr
 export API=21 # Set this to your minSdkVersion.
-
-cd $SDIR
-mkdir build
-./bootstrap
-
-RDIR=SDIR
-if [[ ! -z "$MMZ_ROOTFOLDER" ]]; then RDIR=$MMZ_ROOTFOLDER fi
 
 configure_android(){
 	export CFLAGS="-I$ANDROID_USR/include" # -fPIE
@@ -31,8 +27,7 @@ greencol=$(tput setaf 46)
 defaultcol=$(tput sgr0)
 
 compile_fakeroot(){
-	cd $SDIR
-	mkdir build/$ARCH2; cd build/$ARCH2
+	mkdir -p $SDIR/build/$ARCH2; cd $SDIR/build/$ARCH2
 
 	printf "\n${greencol}Configuring fakeroot for $TARGET...\n\n${defaultcol}"
 	configure_android
@@ -44,6 +39,9 @@ compile_fakeroot(){
 	cp faked $JNIOUTDIR/libfaked.so
 	cp .libs/libfakeroot-0.so $JNIOUTDIR/libfakeroot.so
 }
+
+rm -rf build
+./bootstrap
 
 export TARGET=aarch64-linux-android
 ARCH2=arm64-v8a
